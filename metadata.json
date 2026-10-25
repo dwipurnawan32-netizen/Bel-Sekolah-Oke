@@ -1,0 +1,6 @@
+{
+  "name": "Bel Sekolah Otomatis - SDN Kartika Sejahtera 01",
+  "description": "Aplikasi Sistem Bel Sekolah Otomatis dengan pemutar audio, preset jadwal (Reguler, Ujian, Ramadhan), ekspor/impor JSON, dan kustomisasi hari untuk SDN Kartika Sejahtera 01 Tajurhalang.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

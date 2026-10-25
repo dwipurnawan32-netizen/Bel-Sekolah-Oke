@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Bel Sekolah - SD N Kartika Sejahtera 01</title>
+  <style>
+    /* VARIABEL TEMA (LIGHT & DARK MODE) */
+    :root[data-theme="light"] {
+      --bg-body: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --danger-hover: #dc2626;
+      --warning-bg: #fef3c7;
+      --warning-text: #92400e;
+      --active-bg: #d1fae5;
+      --active-text: #065f46;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+      --badge-bg: #e2e8f0;
+      --badge-text: #334155;
+      --modal-overlay: rgba(15, 23, 42, 0.6);
+    }
+
+    :root[data-theme="dark"] {
+      --bg-body: #0b1120;
+      --bg-card: #1e293b;
+      --bg-card-subtle: #0f172a;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --success: #10b981;
+      --danger: #f87171;
+      --danger-hover: #ef4444;
+      --warning-bg: #451a03;
+      --warning-text: #fde68a;
+      --active-bg: #064e3b;
+      --active-text: #a7f3d0;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+      --badge-bg: #334155;
+      --badge-text: #e2e8f0;
+      --modal-overlay: rgba(0, 0, 0, 0.8);
+    }
+
+    * { box-sizing: border-box; transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      margin: 0;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    .header-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .school-info {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .school-icon {
+      width: 58px;
+      height: 58px;
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 28px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .school-title {
+      margin: 0;
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .school-sub {
+      margin: 3px 0 0 0;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .creator-badge {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+    .theme-toggle-btn:hover { background: var(--border-color); }
+
+    /* CARD UMUM */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    /* DIGITAL CLOCK */
+    .clock-container {
+      text-align: center;
+      padding: 20px;
+    }
+    .day-display {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .clock-display {
+      font-size: 3.8rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      background: var(--warning-bg);
+      color: var(--warning-text);
+      margin: 12px 0 20px 0;
+    }
+
+    .clock-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-danger:hover { background: var(--danger-hover); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+    .btn-outline:hover { background: var(--bg-card-subtle); }
+    .btn-sm { padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; }
+
+    /* GRID */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 820px) {
+      .header-card { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .theme-toggle-btn { align-self: flex-end; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .clock-display { font-size: 2.8rem; }
+    }
+
+    /* FORM STYLES */
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
+    input[type="text"], input[type="time"], select {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      background: var(--bg-card-subtle);
+      border: 1px dashed var(--border-color);
+      border-radius: 8px;
+      color: var(--text-muted);
+    }
+    input:focus, select:focus { border-color: var(--primary); }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .day-chk {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* LIST AUDIO & PRESETS */
+    .item-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    /* TABLE */
+    .table-responsive { overflow-x: auto; margin-top: 10px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th {
+      background: var(--bg-card-subtle);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 12px;
+      border-bottom: 2px solid var(--border-color);
+    }
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin: 2px;
+    }
+
+    /* MODAL POPUP */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--modal-overlay);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(3px);
+    }
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+    }
+
+    /* PRE-BELL IMMINENT ALERT TOAST */
+    .prebell-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      width: 90%;
+      max-width: 580px;
+      background: #0f172a;
+      color: #ffffff;
+      border: 2px solid #f59e0b;
+      border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translate(-50%, -20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    .prebell-badge {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .prebell-countdown-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #f59e0b;
+      background: rgba(245, 158, 11, 0.15);
+      color: #fcd34d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      font-family: monospace;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- FLOATING PRE-BELL IMMINENT ALERT TOAST -->
+<div id="preBellToast" class="prebell-toast">
+  <div style="display:flex; align-items:center; gap:12px;">
+    <div style="font-size:1.8rem; line-height:1;">🔔</div>
+    <div>
+      <span class="prebell-badge">⚠️ Peringatan Pra-Bel</span>
+      <div id="preBellToastTitle" style="font-weight:700; font-size:1rem; color:#ffffff;">
+        [07:00] Bel Masuk Kelas
+      </div>
+      <div style="font-size:0.8rem; color:#cbd5e1; margin-top:2px;">
+        Akan berbunyi otomatis dalam <b id="preBellToastSeconds" style="color:#fcd34d; font-size:0.9rem;">5</b> detik
+      </div>
+    </div>
+  </div>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <div class="prebell-countdown-circle" id="preBellCountdownNum">5</div>
+    <button onclick="dismissPreBellToast()" style="background:transparent; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;">✕</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- HEADER RESMI SEKOLAH -->
+  <header class="header-card">
+    <div class="school-info">
+      <div class="school-icon">🔔</div>
+      <div>
+        <h1 class="school-title">SD N KARTIKA SEJAHTERA 01</h1>
+        <p class="school-sub">Kecamatan Tajurhalang, Kabupaten Bogor</p>
+        <span class="creator-badge">Penanggung Jawab: Dwi Purnawan, S.Pd.</span>
+      </div>
+    </div>
+    <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">
+      <span id="themeIcon">🌙</span> <span id="themeText">Mode Gelap</span>
+    </button>
+  </header>
+
+  <!-- PANEL UTAMA: JAM & KONTROL SISTEM -->
+  <section class="card clock-container">
+    <div id="dayDisplay" class="day-display">MEMUAT WAKTU...</div>
+    <div id="clockDisplay" class="clock-display">00:00:00</div>
+    <div id="statusBadge" class="status-badge">
+      <span style="font-size: 1rem;">⚠️</span> Sistem Bel Belum Aktif
+    </div>
+    <div class="clock-actions">
+      <button id="btnInit" class="btn btn-success" onclick="activateSystem()">
+        ▶ Aktifkan Sistem Bel
+      </button>
+      <button class="btn btn-danger" onclick="stopAllAudio()">
+        ⏹ Stop Suara / Matikan Bel
+      </button>
+    </div>
+  </section>
+
+  <!-- PENGATURAN NOTIFIKASI PRA-BEL (PRE-BELL SETTINGS) -->
+  <section class="card" style="border-left: 4px solid var(--primary);">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+      <h3 style="margin: 0; display:flex; align-items:center; gap:8px;">
+        <span>⚡</span> Notifikasi Pra-Bel (Peringatan Awal Imminent)
+      </h3>
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; font-size:0.9rem;">
+        <input type="checkbox" id="preBellEnabledCheck" checked onchange="updatePreBellSettings()">
+        Aktifkan Pra-Bel
+      </label>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      Membunyikan nada peringatan awal atau memunculkan countdown visual di layar beberapa detik sebelum jadwal bel utama tiba.
+    </p>
+
+    <div class="grid-2">
+      <div>
+        <label>Waktu Peringatan Awal (Sebelum Bel Utama):</label>
+        <select id="preBellSecondsSelect" onchange="updatePreBellSettings()" style="margin-top:4px;">
+          <option value="3">3 Detik Sebelum Bel</option>
+          <option value="5" selected>5 Detik Sebelum Bel (Rekomendasi)</option>
+          <option value="10">10 Detik Sebelum Bel</option>
+          <option value="15">15 Detik Sebelum Bel</option>
+          <option value="20">20 Detik Sebelum Bel</option>
+        </select>
+        <div style="margin-top:12px;">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:normal; font-size:0.85rem;">
+            <input type="checkbox" id="preBellVisualCheck" checked onchange="updatePreBellSettings()">
+            Tampilkan Notifikasi Visual Melayang (Countdown Layar)
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label>Pilihan Nada Suara Pra-Bel:</label>
+        <select id="preBellSoundSelect" onchange="updatePreBellSettings()" style="margin-top:4px;">
+          <option value="dual" selected>Nada Ganda Lembut (Soft Dual Chime)</option>
+          <option value="radar">Ping Radar Peringatan (Radar Beep)</option>
+          <option value="ding">Ketukan Bel Singkat (Short Bell Ding)</option>
+          <option value="mute">Hening (Hanya Peringatan Visual)</option>
+        </select>
+        <div style="margin-top:12px; display:flex; gap:8px;">
+          <button class="btn btn-sm btn-primary" onclick="testPreBellAlert()">
+            ▶ Uji Coba Notifikasi Pra-Bel
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID 2 KOLOM: PUSTAKA SUARA & TAMBAH JADWAL -->
+  <div class="grid-2">
+
+    <!-- CARD 1: PERPUSTAKAAN SUARA -->
+    <div class="card">
+      <h3 style="margin-top: 0; display:flex; align-items:center; gap:8px;">
+        <span>📁</span> Perpustakaan Suara Bel
+      </h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+        Unggah file audio MP3/WAV untuk dijadikan variasi nada bel sekolah.
+      </p>
+
+      <div class="form-group">
+        <label>Pilih File Audio:</label>
+        <input type="file" id="audioFileInput" accept="audio/*">
+      </div>
+
+      <div class="form-group">
+        <label>Nama / Keterangan Suara:</label>
+        <input type="text" id="audioNameInput" placeholder="Contoh: Bel Masuk / Senam Pagi">
+      </div>
+
+      <button class="btn btn-primary" style="width: 100%;" onclick="handleUploadAudio()">
+        💾 Simpan ke Perpustakaan Suara
+      </button>
+
+      <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+      <label>Daftar Audio Tersedia:</label>
+      <ul class="item-list" id="audioListDisplay"></ul>
+    </div>
+
+    <!-- CARD 2: FORM TAMBAH JADWAL MANUAL -->
+    <div class="card">
+      <h3 style="margin-top: 0; display:flex; align-items:center; gap:8px;">
+        <span>➕</span> Atur Jadwal Manual
+      </h3>
+      <form id="scheduleForm" onsubmit="handleAddSchedule(event)">
+        <div class="form-group">
+          <label>Waktu Bel (Jam:Menit):</label>
+          <input type="time" id="schedTime" required>
+        </div>
+
+        <div class="form-group">
+          <label>Keterangan Kegiatan:</label>
+          <input type="text" id="schedLabel" placeholder="Contoh: Jam Masuk / Istirahat Siang" required>
+        </div>
+
+        <div class="form-group">
+          <label>Pilih Suara Bel:</label>
+          <select id="schedSound" required></select>
+        </div>
+
+        <div class="form-group">
+          <label>Pilih Hari Aktif (Senin s/d Sabtu):</label>
+          <div class="days-grid">
+            <label class="day-chk"><input type="checkbox" name="days" value="Senin">Senin</label>
+            <label class="day-chk"><input type="checkbox" name="days" value="Selasa">Selasa</label>
+            <label class="day-chk"><input type="checkbox" name="days" value="Rabu">Rabu</label>
+            <label class="day-chk"><input type="checkbox" name="days" value="Kamis">Kamis</label>
+            <label class="day-chk"><input type="checkbox" name="days" value="Jumat">Jumat</label>
+            <label class="day-chk"><input type="checkbox" name="days" value="Sabtu">Sabtu</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+          Tambah ke Tabel Jadwal
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- PERPUSTAKAAN & CADANGAN JADWAL (PRESETS & IMPORT/EXPORT) -->
+  <div class="card">
+    <h3 style="margin-top: 0; display:flex; align-items:center; gap:8px;">
+      <span>📚</span> Perpustakaan & Manajemen Jadwal Tersimpan
+    </h3>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      Simpan kombinasi jadwal sebagai template (Reguler, Ujian, Ramadhan), atau ekspor/impor file jadwal JSON.
+    </p>
+
+    <div class="grid-2">
+      <!-- Simpan Template Lokal -->
+      <div>
+        <label>Simpan Jadwal Saat Ini sebagai Profil Baru:</label>
+        <div style="display: flex; gap: 8px; margin-top: 6px;">
+          <input type="text" id="presetNameInput" placeholder="Contoh: Jadwal Ujian PAS Semester 1">
+          <button class="btn btn-primary" style="white-space: nowrap;" onclick="saveCurrentToPreset()">
+            💾 Simpan Profil
+          </button>
+        </div>
+        <h4 style="margin: 16px 0 8px 0; font-size: 0.9rem;">Daftar Profil Tersimpan:</h4>
+        <ul class="item-list" id="presetListDisplay"></ul>
+      </div>
+
+      <!-- Cadangan & Upload File Eksternal -->
+      <div style="border-left: 1px solid var(--border-color); padding-left: 20px;">
+        <label>Cadangkan / Pindahkan Berkas Jadwal:</label>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+          <button class="btn btn-outline" onclick="exportScheduleJSON()">
+            ⬇ Unduh Cadangan Jadwal (.JSON)
+          </button>
+
+          <div>
+            <label style="font-weight: normal; font-size: 0.85rem; margin-bottom: 4px;">
+              Upload File Jadwal Tersimpan (.JSON):
+            </label>
+            <input type="file" id="uploadJsonInput" accept=".json" onchange="importScheduleJSON(event)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAFTAR JADWAL HARI INI & MINGGUAN -->
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <h3 style="margin: 0; display:flex; align-items:center; gap:8px;">
+        <span>📋</span> Tabel Jadwal Bel Sekolah
+      </h3>
+      <span style="font-size: 0.85rem; color: var(--text-muted);" id="totalScheduleInfo">Total: 0 Jadwal</span>
+    </div>
+
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Waktu</th>
+            <th>Keterangan</th>
+            <th>Hari Berlaku</th>
+            <th>File Suara</th>
+            <th style="text-align: center;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL EDIT JADWAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-content">
+    <h3 style="margin-top: 0; display:flex; align-items:center; gap:8px;">
+      <span>✏️</span> Edit Jadwal Bel Sekolah
+    </h3>
+    <form id="editScheduleForm" onsubmit="handleSaveEditSchedule(event)">
+      <input type="hidden" id="editSchedId">
+
+      <div class="form-group">
+        <label>Waktu Bel (Jam:Menit):</label>
+        <input type="time" id="editSchedTime" required>
+      </div>
+
+      <div class="form-group">
+        <label>Keterangan Kegiatan:</label>
+        <input type="text" id="editSchedLabel" required>
+      </div>
+
+      <div class="form-group">
+        <label>Pilih Suara Bel:</label>
+        <select id="editSchedSound" required></select>
+      </div>
+
+      <div class="form-group">
+        <label>Pilih Hari Aktif (Senin s/d Sabtu):</label>
+        <div class="days-grid">
+          <label class="day-chk"><input type="checkbox" name="editDays" value="Senin">Senin</label>
+          <label class="day-chk"><input type="checkbox" name="editDays" value="Selasa">Selasa</label>
+          <label class="day-chk"><input type="checkbox" name="editDays" value="Rabu">Rabu</label>
+          <label class="day-chk"><input type="checkbox" name="editDays" value="Kamis">Kamis</label>
+          <label class="day-chk"><input type="checkbox" name="editDays" value="Jumat">Jumat</label>
+          <label class="day-chk"><input type="checkbox" name="editDays" value="Sabtu">Sabtu</label>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+        <button type="button" class="btn btn-outline" onclick="closeEditModal()">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const indonesianDays = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  
+  // 1. Data Default Perpustakaan Suara
+  let audioLibrary = [
+    { id: "snd_chime", name: "Chime Westminster (Otomatis)", type: "synth", synthPattern: "westminster" },
+    { id: "snd_1", name: "Nada Klasik Alarm", url: "https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg" },
+    { id: "snd_2", name: "Terompet Istirahat", url: "https://actions.google.com/sounds/v1/alarms/bugle_tune.ogg" }
+  ];
+
+  // 2. Data Jadwal Aktif
+  let schedules = [
+    { id: 101, time: "07:00", label: "Bel Masuk & Pembiasaan", soundId: "snd_chime", days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"] },
+    { id: 102, time: "09:30", label: "Istirahat Kelas 1-3", soundId: "snd_2", days: ["Senin", "Selasa", "Rabu", "Kamis", "Sabtu"] },
+    { id: 103, time: "11:30", label: "Bel Pulang Jumat", soundId: "snd_chime", days: ["Jumat"] }
+  ];
+
+  // 3. Perpustakaan Profil Jadwal
+  let presetLibrary = [
+    {
+      id: "preset_1",
+      name: "Jadwal Reguler Standar",
+      schedules: [
+        { id: 101, time: "07:00", label: "Bel Masuk & Pembiasaan", soundId: "snd_chime", days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"] },
+        { id: 102, time: "09:30", label: "Istirahat Kelas 1-3", soundId: "snd_2", days: ["Senin", "Selasa", "Rabu", "Kamis", "Sabtu"] },
+        { id: 103, time: "11:30", label: "Bel Pulang Jumat", soundId: "snd_chime", days: ["Jumat"] }
+      ]
+    },
+    {
+      id: "preset_2",
+      name: "Jadwal Ujian PTS / PAS",
+      schedules: [
+        { id: 201, time: "07:15", label: "Masuk Ruang Ujian & Berdoa", soundId: "snd_chime", days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"] },
+        { id: 202, time: "07:30", label: "Mulai Ujian Sesi 1", soundId: "snd_1", days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"] },
+        { id: 203, time: "09:00", label: "Selesai Sesi 1 / Istirahat", soundId: "snd_2", days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"] },
+        { id: 204, time: "09:30", label: "Mulai Ujian Sesi 2", soundId: "snd_1", days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"] },
+        { id: 205, time: "11:00", label: "Ujian Selesai / Pulang", soundId: "snd_chime", days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"] }
+      ]
+    }
+  ];
+
+  let audioPlayer = new Audio();
+  let audioCtx = null;
+  let isSystemActive = false;
+  let lastTriggeredKey = "";
+
+  // Web Audio Synth for reliable offline bells
+  function getAudioContext() {
+    if (!audioCtx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContextClass();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  function playSynthWestminster() {
+    const ctx = getAudioContext();
+    const notes = [
+      { f: 659.25, d: 0.6 }, // E5
+      { f: 523.25, d: 0.6 }, // C5
+      { f: 587.33, d: 0.6 }, // D5
+      { f: 392.00, d: 1.0 }, // G4
+      { f: 523.25, d: 0.6 }, // C5
+      { f: 587.33, d: 0.6 }, // D5
+      { f: 659.25, d: 0.6 }, // E5
+      { f: 523.25, d: 1.2 }  // C5
+    ];
+    let startTime = ctx.currentTime + 0.05;
+    notes.forEach(n => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(n.f, startTime);
+
+      // Add harmonic for rich bell tone
+      const osc2 = ctx.createOscillator();
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(n.f * 2, startTime);
+
+      gain.gain.setValueAtTime(0.3, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + n.d);
+
+      osc.connect(gain);
+      osc2.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(startTime);
+      osc2.start(startTime);
+      osc.stop(startTime + n.d);
+      osc2.stop(startTime + n.d);
+
+      startTime += n.d * 0.85;
+    });
+  }
+
+  // ================= THEME TOGGLE =================
+  function toggleTheme() {
+    const root = document.documentElement;
+    const currentTheme = root.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', newTheme);
+
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    if (newTheme === 'dark') {
+      themeIcon.innerText = "☀️";
+      themeText.innerText = "Mode Terang";
+    } else {
+      themeIcon.innerText = "🌙";
+      themeText.innerText = "Mode Gelap";
+    }
+  }
+
+  // ================= SYSTEM ENGINE =================
+  function activateSystem() {
+    isSystemActive = true;
+    getAudioContext();
+    const badge = document.getElementById('statusBadge');
+    badge.innerHTML = "<span>🟢</span> Sistem Berjalan Normal (Memantau Jadwal)";
+    badge.style.background = "var(--active-bg)";
+    badge.style.color = "var(--active-text)";
+
+    const btn = document.getElementById('btnInit');
+    btn.disabled = true;
+    btn.innerText = "✔ Sistem Aktif";
+    btn.classList.replace("btn-success", "btn-outline");
+
+    audioPlayer.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+    audioPlayer.play().catch(e => console.log("Audio unlock:", e));
+  }
+
+  function stopAllAudio() {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+    if (audioCtx) {
+      audioCtx.close().catch(() => {});
+      audioCtx = null;
+    }
+    dismissPreBellToast();
+    if (isSystemActive) {
+      document.getElementById('statusBadge').innerHTML = "<span>🟢</span> Sistem Berjalan Normal (Suara Dihentikan)";
+    }
+  }
+
+  // ================= PRE-BELL NOTIFICATION ENGINE =================
+  let preBellConfig = {
+    enabled: true,
+    seconds: 5,
+    sound: 'dual',
+    visual: true
+  };
+  let lastPreBellTriggerKey = "";
+  let preBellCountdownTimer = null;
+
+  function updatePreBellSettings() {
+    preBellConfig.enabled = document.getElementById('preBellEnabledCheck').checked;
+    preBellConfig.seconds = parseInt(document.getElementById('preBellSecondsSelect').value, 10);
+    preBellConfig.sound = document.getElementById('preBellSoundSelect').value;
+    preBellConfig.visual = document.getElementById('preBellVisualCheck').checked;
+  }
+
+  function playPreBellSynth(soundType) {
+    if (soundType === 'mute') return;
+    try {
+      const ctx = getAudioContext();
+      const startTime = ctx.currentTime + 0.02;
+
+      if (soundType === 'radar') {
+        [0, 0.16].forEach(offset => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, startTime + offset);
+          gain.gain.setValueAtTime(0.001, startTime + offset);
+          gain.gain.linearRampToValueAtTime(0.3, startTime + offset + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, startTime + offset + 0.1);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(startTime + offset);
+          osc.stop(startTime + offset + 0.12);
+        });
+      } else if (soundType === 'ding') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(783.99, startTime);
+        gain.gain.setValueAtTime(0.001, startTime);
+        gain.gain.linearRampToValueAtTime(0.4, startTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.65);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + 0.7);
+      } else {
+        // 'dual' chime
+        const notes = [
+          { f: 659.25, d: 0.18, offset: 0 },
+          { f: 880.00, d: 0.45, offset: 0.22 }
+        ];
+        notes.forEach(n => {
+          const t = startTime + n.offset;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(n.f, t);
+          gain.gain.setValueAtTime(0.001, t);
+          gain.gain.linearRampToValueAtTime(0.3, t + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + n.d);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + n.d + 0.05);
+        });
+      }
+    } catch (e) {
+      console.warn("Pre-bell sound error:", e);
+    }
+  }
+
+  function showPreBellToast(scheduleItem, secondsRemaining) {
+    if (!preBellConfig.visual) return;
+    const toast = document.getElementById('preBellToast');
+    document.getElementById('preBellToastTitle').innerText = `[${scheduleItem.time}] ${scheduleItem.label}`;
+    document.getElementById('preBellToastSeconds').innerText = secondsRemaining;
+    document.getElementById('preBellCountdownNum').innerText = secondsRemaining;
+    toast.style.display = 'flex';
+
+    if (preBellCountdownTimer) clearInterval(preBellCountdownTimer);
+    let rem = secondsRemaining;
+    preBellCountdownTimer = setInterval(() => {
+      rem--;
+      if (rem <= 0) {
+        clearInterval(preBellCountdownTimer);
+        dismissPreBellToast();
+      } else {
+        document.getElementById('preBellToastSeconds').innerText = rem;
+        document.getElementById('preBellCountdownNum').innerText = rem;
+      }
+    }, 1000);
+  }
+
+  function dismissPreBellToast() {
+    const toast = document.getElementById('preBellToast');
+    if (toast) toast.style.display = 'none';
+    if (preBellCountdownTimer) {
+      clearInterval(preBellCountdownTimer);
+      preBellCountdownTimer = null;
+    }
+  }
+
+  function testPreBellAlert() {
+    if (!isSystemActive) {
+      activateSystem();
+    }
+    updatePreBellSettings();
+    playPreBellSynth(preBellConfig.sound);
+    showPreBellToast({ time: "07:00", label: "Bel Masuk Kelas (Simulasi Pra-Bel)" }, preBellConfig.seconds);
+  }
+
+  function updateClock() {
+    const now = new Date();
+    const currentDay = indonesianDays[now.getDay()];
+    
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    const currentTimeStr = `${h}:${m}:${s}`;
+    const currentHM = `${h}:${m}`;
+    const nowSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+    document.getElementById('clockDisplay').innerText = currentTimeStr;
+    document.getElementById('dayDisplay').innerText = `${currentDay}, ${now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+
+    if (isSystemActive) {
+      // 1. Cek Notifikasi Pra-Bel
+      if (preBellConfig.enabled) {
+        schedules.forEach(item => {
+          if (item.days.includes(currentDay)) {
+            const [sh, sm] = item.time.split(':').map(Number);
+            const targetSec = sh * 3600 + sm * 60;
+            const diff = targetSec - nowSeconds;
+
+            if (diff === preBellConfig.seconds) {
+              const preKey = `pre-${currentDay}-${item.time}-${item.id}`;
+              if (lastPreBellTriggerKey !== preKey) {
+                lastPreBellTriggerKey = preKey;
+                playPreBellSynth(preBellConfig.sound);
+                showPreBellToast(item, diff);
+              }
+            }
+          }
+        });
+      }
+
+      // 2. Cek Eksekusi Bel Utama
+      schedules.forEach(item => {
+        if (item.days.includes(currentDay) && item.time === currentHM && s === "00") {
+          const triggerKey = `${currentDay}-${currentHM}-${item.id}`;
+          if (lastTriggeredKey !== triggerKey) {
+            lastTriggeredKey = triggerKey;
+            dismissPreBellToast();
+            playScheduledBell(item);
+          }
+        }
+      });
+    }
+  }
+
+  function playScheduledBell(scheduleItem) {
+    const audioObj = audioLibrary.find(a => a.id === scheduleItem.soundId);
+    if (!audioObj) return;
+
+    document.getElementById('statusBadge').innerHTML = `<span>🔔</span> Membunyikan: <b>[${scheduleItem.time}] ${scheduleItem.label}</b>`;
+
+    if (audioObj.type === "synth") {
+      playSynthWestminster();
+      return;
+    }
+
+    audioPlayer.src = audioObj.url;
+    audioPlayer.play().catch(err => {
+      console.warn("Playback audio gagal, memutar suara cadangan synth:", err);
+      playSynthWestminster();
+    });
+  }
+
+  // ================= AUDIO MANAGEMENT =================
+  function testSound(id) {
+    const audioObj = audioLibrary.find(a => a.id === id);
+    if (!audioObj) return;
+
+    if (!isSystemActive) {
+      activateSystem();
+    }
+
+    document.getElementById('statusBadge').innerHTML = `<span>▶️</span> Sedang Menguji Nada: <b>${audioObj.name}</b>`;
+
+    if (audioObj.type === "synth") {
+      playSynthWestminster();
+      return;
+    }
+
+    audioPlayer.src = audioObj.url;
+    audioPlayer.play().catch(() => {
+      playSynthWestminster();
+    });
+  }
+
+  function handleUploadAudio() {
+    const fileInput = document.getElementById('audioFileInput');
+    const nameInput = document.getElementById('audioNameInput');
+
+    if (!fileInput.files || fileInput.files.length === 0) {
+      alert("Pilih file audio (MP3/WAV) terlebih dahulu!");
+      return;
+    }
+
+    const file = fileInput.files[0];
+    const soundName = nameInput.value.trim() || file.name;
+    const soundUrl = URL.createObjectURL(file);
+
+    const newSound = {
+      id: "snd_" + Date.now(),
+      name: soundName,
+      url: soundUrl
+    };
+
+    audioLibrary.push(newSound);
+    refreshDropdowns();
+    renderAudioList();
+
+    fileInput.value = "";
+    nameInput.value = "";
+    alert(`Suara "${soundName}" berhasil disimpan ke perpustakaan!`);
+  }
+
+  function deleteAudio(id) {
+    const audioObj = audioLibrary.find(a => a.id === id);
+    if (!audioObj) return;
+
+    if (confirm(`Hapus suara "${audioObj.name}" dari perpustakaan?`)) {
+      audioLibrary = audioLibrary.filter(a => a.id !== id);
+      refreshDropdowns();
+      renderAudioList();
+      renderScheduleTable();
+    }
+  }
+
+  // ================= SCHEDULE ACTIONS =================
+  function handleAddSchedule(e) {
+    e.preventDefault();
+
+    const time = document.getElementById('schedTime').value;
+    const label = document.getElementById('schedLabel').value;
+    const soundId = document.getElementById('schedSound').value;
+    
+    const selectedDays = [];
+    document.querySelectorAll('input[name="days"]:checked').forEach(cb => {
+      selectedDays.push(cb.value);
+    });
+
+    if (selectedDays.length === 0) {
+      alert("Pilih minimal satu hari aktif (Senin s/d Sabtu)!");
+      return;
+    }
+
+    schedules.push({
+      id: Date.now(),
+      time,
+      label,
+      soundId,
+      days: selectedDays
+    });
+
+    schedules.sort((a, b) => a.time.localeCompare(b.time));
+    renderScheduleTable();
+    document.getElementById('scheduleForm').reset();
+  }
+
+  function deleteSchedule(id) {
+    if (confirm("Hapus jadwal kegiatan ini?")) {
+      schedules = schedules.filter(s => s.id !== id);
+      renderScheduleTable();
+    }
+  }
+
+  // ================= EDIT SCHEDULE MODAL =================
+  function openEditModal(id) {
+    const item = schedules.find(s => s.id === id);
+    if (!item) return;
+
+    document.getElementById('editSchedId').value = item.id;
+    document.getElementById('editSchedTime').value = item.time;
+    document.getElementById('editSchedLabel').value = item.label;
+    document.getElementById('editSchedSound').value = item.soundId;
+
+    document.querySelectorAll('input[name="editDays"]').forEach(cb => {
+      cb.checked = item.days.includes(cb.value);
+    });
+
+    document.getElementById('editModal').style.display = 'flex';
+  }
+
+  function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+  }
+
+  function handleSaveEditSchedule(e) {
+    e.preventDefault();
+    const id = Number(document.getElementById('editSchedId').value);
+    const time = document.getElementById('editSchedTime').value;
+    const label = document.getElementById('editSchedLabel').value;
+    const soundId = document.getElementById('editSchedSound').value;
+
+    const selectedDays = [];
+    document.querySelectorAll('input[name="editDays"]:checked').forEach(cb => {
+      selectedDays.push(cb.value);
+    });
+
+    if (selectedDays.length === 0) {
+      alert("Pilih minimal satu hari (Senin s/d Sabtu)!");
+      return;
+    }
+
+    const index = schedules.findIndex(s => s.id === id);
+    if (index !== -1) {
+      schedules[index] = { id, time, label, soundId, days: selectedDays };
+      schedules.sort((a, b) => a.time.localeCompare(b.time));
+      renderScheduleTable();
+      closeEditModal();
+      alert("Jadwal berhasil diperbarui!");
+    }
+  }
+
+  // ================= PRESETS & JSON IMPORT/EXPORT =================
+  function saveCurrentToPreset() {
+    const nameInput = document.getElementById('presetNameInput');
+    const name = nameInput.value.trim();
+    if (!name) {
+      alert("Masukkan nama profil jadwal!");
+      return;
+    }
+
+    presetLibrary.push({
+      id: "preset_" + Date.now(),
+      name: name,
+      schedules: JSON.parse(JSON.stringify(schedules))
+    });
+
+    nameInput.value = "";
+    renderPresetList();
+    alert(`Profil jadwal "${name}" berhasil disimpan ke perpustakaan!`);
+  }
+
+  function applyPreset(presetId) {
+    const preset = presetLibrary.find(p => p.id === presetId);
+    if (!preset) return;
+
+    if (confirm(`Terapkan profil "${preset.name}"? Jadwal aktif saat ini akan diganti.`)) {
+      schedules = JSON.parse(JSON.stringify(preset.schedules));
+      renderScheduleTable();
+      alert(`Profil "${preset.name}" sekarang aktif!`);
+    }
+  }
+
+  function deletePreset(presetId) {
+    if (confirm("Hapus profil jadwal ini dari perpustakaan?")) {
+      presetLibrary = presetLibrary.filter(p => p.id !== presetId);
+      renderPresetList();
+    }
+  }
+
+  // Unduh Cadangan JSON
+  function exportScheduleJSON() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(schedules, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `Jadwal_Bel_SDN_Kartika_01_${Date.now()}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  }
+
+  // Upload Cadangan JSON
+  function importScheduleJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const importedData = JSON.parse(e.target.result);
+        if (Array.isArray(importedData)) {
+          if (confirm("Apakah Anda yakin ingin memuat jadwal dari file ini? Jadwal saat ini akan ditimpa.")) {
+            schedules = importedData;
+            schedules.sort((a, b) => a.time.localeCompare(b.time));
+            renderScheduleTable();
+            alert("Jadwal dari file berhasil dimuat!");
+          }
+        } else {
+          alert("Format file JSON tidak valid.");
+        }
+      } catch (err) {
+        alert("Gagal membaca berkas JSON: " + err.message);
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = ""; // reset input
+  }
+
+  // ================= UI RENDERING =================
+  function refreshDropdowns() {
+    const selects = [document.getElementById('schedSound'), document.getElementById('editSchedSound')];
+    selects.forEach(sel => {
+      if (!sel) return;
+      sel.innerHTML = "";
+      audioLibrary.forEach(snd => {
+        const opt = document.createElement('option');
+        opt.value = snd.id;
+        opt.innerText = snd.name;
+        sel.appendChild(opt);
+      });
+    });
+  }
+
+  function renderAudioList() {
+    const ul = document.getElementById('audioListDisplay');
+    ul.innerHTML = "";
+
+    audioLibrary.forEach(snd => {
+      const li = document.createElement('li');
+      li.className = "list-item";
+      li.innerHTML = `
+        <span style="font-weight: 500; font-size: 0.9rem;">🎵 ${snd.name}</span>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn btn-sm btn-primary" onclick="testSound('${snd.id}')">▶ Tes</button>
+          <button class="btn btn-sm btn-outline" onclick="stopAllAudio()">⏹ Stop</button>
+          ${snd.id !== 'snd_chime' ? `<button class="btn btn-sm btn-danger" onclick="deleteAudio('${snd.id}')">🗑 Hapus</button>` : ''}
+        </div>
+      `;
+      ul.appendChild(li);
+    });
+  }
+
+  function renderPresetList() {
+    const ul = document.getElementById('presetListDisplay');
+    ul.innerHTML = "";
+
+    if (presetLibrary.length === 0) {
+      ul.innerHTML = `<li style="font-size:0.85rem; color:var(--text-muted);">Belum ada profil jadwal yang disimpan.</li>`;
+      return;
+    }
+
+    presetLibrary.forEach(p => {
+      const li = document.createElement('li');
+      li.className = "list-item";
+      li.innerHTML = `
+        <div>
+          <strong>${p.name}</strong>
+          <div style="font-size:0.75rem; color:var(--text-muted);">${p.schedules.length} Jadwal</div>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn btn-sm btn-success" onclick="applyPreset('${p.id}')">Terapkan</button>
+          <button class="btn btn-sm btn-danger" onclick="deletePreset('${p.id}')">Hapus</button>
+        </div>
+      `;
+      ul.appendChild(li);
+    });
+  }
+
+  function renderScheduleTable() {
+    const tbody = document.getElementById('scheduleTableBody');
+    tbody.innerHTML = "";
+
+    document.getElementById('totalScheduleInfo').innerText = `Total: ${schedules.length} Jadwal Terdaftar`;
+
+    schedules.forEach(item => {
+      const audioObj = audioLibrary.find(a => a.id === item.soundId);
+      const audioName = audioObj ? audioObj.name : "<span style='color:red'>Suara Dihapus</span>";
+      const dayBadges = item.days.map(d => `<span class="badge">${d}</span>`).join('');
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong style="color:var(--primary); font-size:1.05rem;">${item.time}</strong></td>
+        <td><b>${item.label}</b></td>
+        <td>${dayBadges}</td>
+        <td>${audioName}</td>
+        <td style="text-align: center;">
+          <div style="display:inline-flex; gap:6px;">
+            <button class="btn btn-sm btn-primary" onclick="testSound('${item.soundId}')">▶ Tes</button>
+            <button class="btn btn-sm btn-outline" onclick="openEditModal(${item.id})">✏️ Edit</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteSchedule(${item.id})">🗑 Hapus</button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // ================= INISIALISASI =================
+  refreshDropdowns();
+  renderAudioList();
+  renderPresetList();
+  renderScheduleTable();
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
+
+</body>
+</html>
